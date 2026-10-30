@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="RuangObrol adalah aplikasi chat real-time berbasis WebSocket dan Socket.IO."
+    />
+    <meta name="theme-color" content="#14162b" />
+    <title>RuangObrol — Chat Real-Time</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2314162b'/%3E%3Cpath d='M8 9h16a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3h-8l-6 4v-4H8a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3Z' fill='%23ff6b4a'/%3E%3Ccircle cx='12' cy='16' r='1.6' fill='%23fff8ef'/%3E%3Ccircle cx='17' cy='16' r='1.6' fill='%23fff8ef'/%3E%3Ccircle cx='22' cy='16' r='1.6' fill='%23fff8ef'/%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main id="login-screen" class="login-screen">
+      <section class="showcase">
+        <header class="showcase-header">
+          <a class="brand brand--light" href="/" aria-label="RuangObrol">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none">
+                <path
+                  d="M5.5 7.5h21a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3h-11l-6.5 4v-4H5.5a3 3 0 0 1-3-3v-11a3 3 0 0 1 3-3Z"
+                  fill="currentColor"
+                />
+                <circle cx="11" cy="16" r="1.7" fill="#14162b" />
+                <circle cx="17" cy="16" r="1.7" fill="#14162b" />
+                <circle cx="23" cy="16" r="1.7" fill="#14162b" />
+              </svg>
+            </span>
+            <span class="brand-word">Ruang<span>Obrol</span>.</span>
+          </a>
+          <span class="showcase-badge">Tugas Socket Programming</span>
+        </header>
+
+        <div class="showcase-copy">
+          <p class="eyebrow eyebrow--light"><span class="eyebrow-dot"></span> Real-time chat · WebSocket</p>
+          <h1>Ngobrol lancar,<br /><em>tanpa jeda.</em></h1>
+          <p class="showcase-lead">
+            Satu ruang, banyak cerita. Kirim pesan dan lihat balasannya
+            seketika melalui koneksi WebSocket yang tetap terbuka.
+          </p>
+          <ul class="feature-chips" aria-label="Keunggulan aplikasi">
+            <li>Tanpa instalasi</li>
+            <li>Pesan instan</li>
+            <li>Multi-ruang</li>
+          </ul>
+        </div>
+
+        <div class="preview-stage" aria-hidden="true">
+          <div class="preview-room">
+            <span class="preview-room-dot"></span>
+            <strong>Ruang Umum</strong>
+            <span class="preview-room-online">3 online</span>
+          </div>
+          <div class="preview-bubble preview-bubble--left">
+            <span class="preview-avatar preview-avatar--mint">AL</span>
+            <div>
+              <span class="preview-name">Alya</span>
+              <p>Ada yang sudah coba Socket.IO? Seru juga ya 👀</p>
+            </div>
+          </div>
+          <div class="preview-bubble preview-bubble--right">
+            <div>
+              <span class="preview-name">Bima</span>
+              <p>Sudah! Pesannya langsung masuk tanpa refresh.</p>
+            </div>
+            <span class="preview-avatar preview-avatar--coral">BM</span>
+          </div>
+          <div class="preview-typing">
+            <span class="typing-dots"><i></i><i></i><i></i></span>
+            Rani sedang mengetik
+          </div>
+        </div>
+
+        <footer class="showcase-footer">
+          <span>Socket.IO</span>
+          <span class="showcase-footer-line"></span>
+          <span>Event-driven</span>
+          <span class="showcase-footer-line"></span>
+          <span>Full-duplex</span>
+        </footer>
+      </section>
+
+      <section class="login-panel">
+        <div class="login-card">
+          <div class="mobile-brand">
+            <span class="brand-mark brand-mark--dark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none">
+                <path
+                  d="M5.5 7.5h21a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3h-11l-6.5 4v-4H5.5a3 3 0 0 1-3-3v-11a3 3 0 0 1 3-3Z"
+                  fill="currentColor"
+                />
+                <circle cx="11" cy="16" r="1.7" fill="#fff8ef" />
+                <circle cx="17" cy="16" r="1.7" fill="#fff8ef" />
+                <circle cx="23" cy="16" r="1.7" fill="#fff8ef" />
+              </svg>
+            </span>
+            <span class="brand-word">Ruang<span>Obrol</span>.</span>
+          </div>
+
+          <div class="login-heading">
+            <p class="eyebrow">Mulai obrolan</p>
+            <h2>Siapa namamu?</h2>
+            <p>Pilih nama dan ruang. Kamu bisa langsung ikut mengobrol.</p>
+          </div>
+
+          <form id="login-form" novalidate>
+            <div class="form-group">
+              <label for="name-input">Nama tampilan</label>
+              <div class="name-field">
+                <div id="login-avatar" class="avatar avatar--preview" aria-hidden="true">?</div>
+                <input
+                  id="name-input"
+                  name="name"
+                  type="text"
+                  maxlength="24"
+                  minlength="2"
+                  autocomplete="nickname"
+                  placeholder="Contoh: Alya Putri"
+                  required
+                  aria-describedby="name-hint"
+                />
+              </div>
+              <p id="name-hint" class="field-hint">2–24 karakter, tanpa perlu daftar akun.</p>
+            </div>
+
+            <fieldset class="room-fieldset">
+              <legend>Pilih ruang</legend>
+              <div id="room-picker" class="room-picker" aria-live="polite">
+                <div class="room-skeleton"></div>
+                <div class="room-skeleton"></div>
+                <div class="room-skeleton"></div>
+              </div>
+            </fieldset>
+
+            <button id="join-btn" class="primary-btn" type="submit" disabled>
+              <span>Masuk ke ruang</span>
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+
+            <p id="login-status" class="login-status" data-state="connecting" aria-live="polite">
+              <span class="status-dot"></span>
+              <span id="login-status-text">Menghubungkan ke server…</span>
+            </p>
+          </form>
+
+          <p class="privacy-note">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 10V7a5 5 0 0 1 10 0v3M6 10h12a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+            </svg>
+            Pesan hanya disimpan di memori server dan akan hilang saat server dimulai ulang.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <div id="chat-screen" class="chat-screen" hidden>
+      <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+      <aside id="sidebar" class="sidebar" aria-label="Navigasi obrolan">
+        <div class="sidebar-brand-row">
+          <a class="brand brand--light" href="/" aria-label="RuangObrol">
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none">
+                <path
+                  d="M5.5 7.5h21a3 3 0 0 1 3 3v11a3 3 0 0 1-3 3h-11l-6.5 4v-4H5.5a3 3 0 0 1-3-3v-11a3 3 0 0 1 3-3Z"
+                  fill="currentColor"
+                />
+                <circle cx="11" cy="16" r="1.7" fill="#14162b" />
+                <circle cx="17" cy="16" r="1.7" fill="#14162b" />
+                <circle cx="23" cy="16" r="1.7" fill="#14162b" />
+              </svg>
+            </span>
+            <span class="brand-word">Ruang<span>Obrol</span>.</span>
+          </a>
+          <button id="close-sidebar" class="icon-btn icon-btn--sidebar" type="button" aria-label="Tutup menu">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+        </div>
+
+        <div id="connection-chip" class="connection-chip" data-state="online">
+          <span class="status-dot"></span>
+          <span id="connection-text">Terhubung · WebSocket</span>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="section-label">
+            <span>Ruang obrolan</span>
+            <span class="section-label-icon" aria-hidden="true">↗</span>
+          </div>
+          <nav id="room-list" class="room-list" aria-label="Daftar ruang"></nav>
+        </div>
+
+        <div class="sidebar-section sidebar-section--users">
+          <div class="section-label">
+            <span>Sedang online</span>
+            <span id="online-count" class="count-badge">0</span>
+          </div>
+          <div id="online-list" class="online-list"></div>
+        </div>
+
+        <div class="sidebar-profile">
+          <div id="profile-avatar" class="avatar avatar--profile" aria-hidden="true">?</div>
+          <div class="profile-meta">
+            <strong id="profile-name">Kamu</strong>
+            <span><i class="online-pip"></i> Online</span>
+          </div>
+          <button id="leave-btn" class="icon-btn icon-btn--logout" type="button" title="Keluar" aria-label="Keluar dari obrolan">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-3M10 12h11m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </div>
+      </aside>
+
+      <section class="chat-panel" aria-label="Ruang obrolan aktif">
+        <header class="chat-header">
+          <button id="open-sidebar" class="icon-btn icon-btn--menu" type="button" aria-label="Buka menu">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+            </svg>
+          </button>
+
+          <div class="header-room">
+            <div id="header-emoji" class="header-emoji" aria-hidden="true">💬</div>
+            <div class="header-copy">
+              <h1 id="header-name">Ruang Umum</h1>
+              <p id="header-description">Obrolan santai untuk semua orang.</p>
+            </div>
+          </div>
+
+          <div class="header-presence">
+            <div id="header-avatars" class="mini-avatars" aria-hidden="true"></div>
+            <span id="header-online">0 online</span>
+          </div>
+        </header>
+
+        <div id="offline-banner" class="offline-banner" hidden>
+          <span class="offline-spinner" aria-hidden="true"></span>
+          Koneksi terputus. Mencoba menyambung ulang…
+        </div>
+
+        <div id="messages-wrap" class="messages-wrap">
+          <section
+            id="messages"
+            class="messages"
+            role="log"
+            aria-live="polite"
+            aria-label="Pesan obrolan"
+          ></section>
+        </div>
+
+        <div class="typing-row">
+          <p id="typing-indicator" class="typing-indicator" aria-live="polite"></p>
+        </div>
+
+        <form id="message-form" class="composer">
+          <div class="emoji-wrap">
+            <button id="emoji-btn" class="composer-btn" type="button" aria-label="Pilih emoji" aria-expanded="false">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" />
+                <path d="M8.5 14.5s1.2 2 3.5 2 3.5-2 3.5-2M9 9.5h.01M15 9.5h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </button>
+            <div id="emoji-popover" class="emoji-popover" role="dialog" aria-label="Pilih emoji" hidden></div>
+          </div>
+
+          <label class="sr-only" for="message-input">Tulis pesan</label>
+          <textarea
+            id="message-input"
+            rows="1"
+            maxlength="500"
+            placeholder="Tulis pesan untuk ruang ini…"
+            autocomplete="off"
+            aria-describedby="composer-hint"
+          ></textarea>
+          <span id="char-count" class="char-count" aria-hidden="true">0/500</span>
+          <span id="composer-hint" class="sr-only">Tekan Enter untuk mengirim, Shift + Enter untuk baris baru.</span>
+
+          <button id="send-btn" class="send-btn" type="submit" aria-label="Kirim pesan">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="m4 4 17 8-17 8 3-8-3-8Z" fill="currentColor" />
+              <path d="M7 12h14" stroke="white" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </button>
+        </form>
+      </section>
+    </div>
+
+    <div id="toast-container" class="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/app.js"></script>
+  </body>
+</html>

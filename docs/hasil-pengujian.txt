@@ -1,0 +1,40 @@
+HASIL PENGUJIAN RUANGOBROL
+Tanggal        : 24 October 2026, 18:40:57 WIB
+Sistem operasi : macOS 14.8.9
+Node.js        : v24.21.0
+npm            : 11.19.0
+
+============================================================
+1. PENGUJIAN INTEGRASI (npm test)
+============================================================
+
+
+> ruangobrol@1.0.0 test
+> node --test
+
+✔ server menyajikan antarmuka web dan health check (231.3236ms)
+✔ dua client dapat bertukar pesan secara real-time melalui WebSocket (297.424966ms)
+✔ pesan tidak bocor ke ruang lain dan riwayat tersedia setelah pindah ruang (334.293125ms)
+✔ server memvalidasi nama, ruang, pesan kosong, dan pesan terlalu panjang (34.585517ms)
+✔ indikator mengetik dan daftar online ikut diperbarui saat client keluar (57.975343ms)
+✔ client dapat berpindah ruang dan presence kedua ruang diperbarui (35.9088ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2358.121808
+
+============================================================
+2. PENGUJIAN UI END-TO-END + SCREENSHOT (npm run screenshots)
+============================================================
+
+
+> ruangobrol@1.0.0 screenshots
+> node scripts/screenshots.js
+
+✓ UI login, chat, typing, mobile menu, dan perpindahan ruang berjalan.
+✓ Koneksi WebSocket terdeteksi: ws://127.0.0.1:50621/socket.io/?EIO=4&transport=websocket
+✓ Tangkapan layar tersimpan di docs/screenshots/
