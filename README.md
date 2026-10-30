@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # RuangObrol — Chat Real-Time Berbasis WebSocket
 
 Aplikasi chat multi-client yang menerapkan komunikasi socket antara browser (client) dan server Node.js. Pesan, daftar pengguna online, indikator mengetik, dan perpindahan ruang dikirim secara **real-time melalui WebSocket** menggunakan Socket.IO.
@@ -147,3 +148,6 @@ Event lengkap, rancangan arsitektur, potongan kode utama, hasil pengujian, dan a
 - [Socket.IO — Rooms](https://socket.io/docs/v4/rooms/)
 - [Socket.IO — Server API](https://socket.io/docs/v4/server-api/)
 - [RFC 6455 — The WebSocket Protocol](https://www.rfc-editor.org/rfc/rfc6455)
+=======
+# ruang-obrol
+>>>>>>> 3576278cc2b259c0910f9c1e73039289ccf8019c
